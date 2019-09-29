@@ -1,9 +1,12 @@
 from django.urls import path, include
+
 from .views import (
-    index
+    site_index,
+    user
 )
 
 
 urlpatterns = [
-    path('', index.index, name='index'),
+    path('', site_index.index, name='index'),
+    path('user/index', user.general.index, name="user_index")
 ]

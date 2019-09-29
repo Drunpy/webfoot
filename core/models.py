@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 class Base(models.Model):
     active = models.BooleanField(default=True)
@@ -16,17 +17,17 @@ class Sessions(Base):
     token = models.CharField(max_length=45)
 
 class UserSessionStats(Base):
-    user = # Map to user
-    session = models.ForeignKey("core.session", on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    session = models.ForeignKey("core.sessions", on_delete=models.CASCADE)
     ranking_position = models.SmallIntegerField(default=0)
 
 # Match Data
 class Matchs(Base):
-    user = # Map to user
-    session = models.ForeignKey("core.session", on_delete=models.CASCADE)
-    team_red = models.ForeignKey("core.teams", on_delete=models.CASCADE)
-    team_blue = models.ForeignKey("core.teams", on_delete=models.CASCADE)
-    winner = models.ForeignKey("core.teams", on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    session = models.ForeignKey("core.sessions", on_delete=models.CASCADE)
+    team_red = models.ForeignKey("core.teams", related_name="red_team_matchs", on_delete=models.CASCADE)
+    team_blue = models.ForeignKey("core.teams", related_name="blue_team_matchs", on_delete=models.CASCADE)
+    winner = models.ForeignKey("core.teams", related_name="victories", on_delete=models.CASCADE)
     is_completed = models.BooleanField(default=False)
 
 # Base stats of individual players
