@@ -7,8 +7,17 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <title>BR - WebFoot</title>
 </head>
-<body>
-    asasasas
+<body style="text-align: center;">
+    {% load staticfiles %}
     
+    <form>
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" />
+        
+        <label for="username">Password</label>
+        <input type="password" id="password" name="password" />
+
+        <button type="submit">Entrar</button>
+    </form>
 </body>
 </html>
