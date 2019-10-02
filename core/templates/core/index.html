@@ -10,7 +10,9 @@
 <body style="text-align: center;">
     {% load staticfiles %}
     
-    <form>
+    <form method="post">
+        {% csrf_token %}
+        
         <label for="username">Username</label>
         <input type="text" id="username" name="username" />
         
