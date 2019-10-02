@@ -5,6 +5,9 @@ class Base(models.Model):
     active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
+    class Meta:
+        abstract = True
+
 # User data
 class Data(Base):
     pass

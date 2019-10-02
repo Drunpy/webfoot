@@ -6,5 +6,5 @@ from django.http import Http404
 def core(request, session_token):
     session = Sessions.objects.filter(token=session_token)
 
-    if not sesion.exists():
+    if not session.exists():
         raise Http404()
