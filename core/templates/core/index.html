@@ -12,14 +12,14 @@
     
     <form method="post">
         {% csrf_token %}
-        
+
         <label for="username">Username</label>
-        <input type="text" id="username" name="username" />
+        <input type="text" class="form-control" id="username" name="username" />
         
         <label for="username">Password</label>
-        <input type="password" id="password" name="password" />
+        <input type="password" class="form-control" id="password" name="password" />
 
-        <button type="submit">Entrar</button>
+        <button type="submit" class="btn btn-primary">Entrar</button>
     </form>
 </body>
 </html>
