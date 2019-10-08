@@ -7,23 +7,41 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <title>BR - WebFoot</title>
 </head>
-<body style="text-align: center;">
+<body style="text-align: center; background-color: #f2f2f2;" class="pt-5" >
     {% load staticfiles %}
-    
-    <div class="row">
-        <div class="col-12 d-flex justify-content-center">
-            <form method="post">
-                {% csrf_token %}
+    <div class="container  mt-5">
+        <form method="post">
+        {% csrf_token %}
+            <div class="w-50 bg-white mx-auto p-3">
+                <div class="row mb-1">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label for="username">Username</label>
+                            <input type="text" class="form-control" id="username" name="username" />
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label for="username">Password</label>
+                            <input type="password" class="form-control" id="password" name="password" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-4">
+                    <div class="col-6 text-left">
+                        <a href="#">Esqueci a Senha</a>
+                    </div>
+                    <div class="col-6 text-right">
+                        <a href="#">Cadastre-se</a>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-block btn-success">Entrar</button>
 
-                <label for="username">Username</label>
-                <input type="text" class="form-control" id="username" name="username" />
-                
-                <label for="username">Password</label>
-                <input type="password" class="form-control" id="password" name="password" />
-
-                <button type="submit" class="btn btn-primary">Entrar</button>
-            </form>
-        </div>
+            </div>
+            
+            
+        </form>
     </div>
+    
 </body>
 </html>
