@@ -10,3 +10,16 @@ def core(request, session_token):
         if not session.exists():
             raise Http404()
 
+def home(request, session_token):
+    session = Sessions.objects.filter(token=session_token)
+
+    if request.method == 'GET':
+        if not session.exists():
+            raise Http404()
+
+def about(request, session_token):
+    session = Sessions.objects.filter(token=session_token)
+
+    if request.method == 'GET':
+        if not session.exists():
+            raise Http404()
