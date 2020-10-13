@@ -38,9 +38,12 @@ class Players(Base):
     first_name = models.CharField(max_length=45)
     last_name = models.CharField(max_length=150)
     
+    ratings = models.IntegerField(default=0) # 0 to 100? 
     strength = models.IntegerField(default=0)# Agressiviness?
     agility = models.IntegerField(default=0)# Velocity
     resistence = models.IntegerField(default=0)# Duration in game ?
 
+    foot = models.CharField(max_length=10)# left or right?
     position = models.CharField(max_length=45)
     team = models.ForeignKey("core.teams", related_name="player", on_delete=models.CASCADE)
+    
