@@ -44,5 +44,6 @@ class Players(Base):
     resistence = models.IntegerField(default=0)# Duration in game ?
 
     foot = models.CharField(max_length=10)# left or right?
-    position = models.CharField(max_length=4)# GK(GL), DF(ZG), ...?
+    position = models.CharField(max_length=45)
+    team = models.ForeignKey("core.teams", related_name="player", on_delete=models.CASCADE)
     
