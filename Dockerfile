@@ -1,8 +1,11 @@
-FROM python3.8
+FROM python:3.7-alpine
+
+# Installing necessary components
+RUN apk update
+RUN apk add musl-dev build-base mariadb-dev linux-headers bash
+RUN python -m pip install --upgrade pip
 
 COPY . ./webfoot
+WORKDIR /webfoot
 
-RUN apt-get update && apt-get upgrade
-RUN apt-get install -y gcc python3-dev python3-setuptools
-RUN python -m pip install --upgrade pip
-RUN pip install -r requirements.txt
+RUN pip install -r ./requirements.txt
