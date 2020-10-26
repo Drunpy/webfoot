@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from core.models import Sessions
+from game.models.game import Sessions
 from django.http import Http404
 
 # Poo teams on the same match
@@ -23,3 +23,9 @@ def about(request, session_token):
     if request.method == 'GET':
         if not session.exists():
             raise Http404()
+
+def terms(request):
+    return ''
+
+def help(request):
+    return ''
