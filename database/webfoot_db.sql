@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: mysql
--- Tempo de geração: 22-Out-2020 às 11:38
+-- Tempo de geração: 26-Out-2020 às 11:04
 -- Versão do servidor: 8.0.21
 -- versão do PHP: 7.4.11
 
@@ -105,7 +105,11 @@ INSERT INTO `auth_permission` (`id`, `name`, `content_type_id`, `codename`) VALU
 (41, 'Can add players', 11, 'add_players'),
 (42, 'Can change players', 11, 'change_players'),
 (43, 'Can delete players', 11, 'delete_players'),
-(44, 'Can view players', 11, 'view_players');
+(44, 'Can view players', 11, 'view_players'),
+(45, 'Can add data', 12, 'add_data'),
+(46, 'Can change data', 12, 'change_data'),
+(47, 'Can delete data', 12, 'delete_data'),
+(48, 'Can view data', 12, 'view_data');
 
 -- --------------------------------------------------------
 
@@ -132,7 +136,7 @@ CREATE TABLE `auth_user` (
 --
 
 INSERT INTO `auth_user` (`id`, `password`, `last_login`, `is_superuser`, `username`, `first_name`, `last_name`, `email`, `is_staff`, `is_active`, `date_joined`) VALUES
-(1, 'pbkdf2_sha256$180000$AC3KpbAanMgN$bEUrKEY1QDWhO7XqNww2L1IO6vFDS9pNgfKX0YF38kk=', '2020-10-22 11:11:48.707368', 1, 'admin', '', '', '', 1, 1, '2020-10-22 11:11:43.825687');
+(1, 'pbkdf2_sha256$180000$AC3KpbAanMgN$bEUrKEY1QDWhO7XqNww2L1IO6vFDS9pNgfKX0YF38kk=', '2020-10-26 10:56:41.278959', 1, 'admin', '', '', '', 1, 1, '2020-10-22 11:11:43.825687');
 
 -- --------------------------------------------------------
 
@@ -197,6 +201,7 @@ INSERT INTO `django_content_type` (`id`, `app_label`, `model`) VALUES
 (2, 'auth', 'permission'),
 (4, 'auth', 'user'),
 (5, 'contenttypes', 'contenttype'),
+(12, 'game', 'data'),
 (10, 'game', 'matchs'),
 (11, 'game', 'players'),
 (8, 'game', 'sessions'),
@@ -238,7 +243,8 @@ INSERT INTO `django_migrations` (`id`, `app`, `name`, `applied`) VALUES
 (14, 'auth', '0009_alter_user_last_name_max_length', '2020-10-22 11:10:55.699220'),
 (15, 'auth', '0010_alter_group_name_max_length', '2020-10-22 11:10:55.842365'),
 (16, 'auth', '0011_update_proxy_permissions', '2020-10-22 11:10:55.905154'),
-(17, 'sessions', '0001_initial', '2020-10-22 11:10:56.134138');
+(17, 'sessions', '0001_initial', '2020-10-22 11:10:56.134138'),
+(18, 'game', '0001_initial', '2020-10-26 10:56:11.092125');
 
 -- --------------------------------------------------------
 
@@ -257,7 +263,100 @@ CREATE TABLE `django_session` (
 --
 
 INSERT INTO `django_session` (`session_key`, `session_data`, `expire_date`) VALUES
+('66tvjhr03z2h6ojv17df4rohfa9uh2i4', 'M2JhZDY5MTdkNjQzMzRhNTE5Y2ZlN2M1MDcyMDYyMWE0M2ZkZGNmZDp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiIxMTNkMjMyNjhjNGY2OGU3NGZmNWI2Y2UyNzE2N2QxNjI5NTE1Mzg0In0=', '2020-11-09 10:56:41.285320'),
 ('dd1l6sgws8z620fpo86ieyie0v0j3wo5', 'M2JhZDY5MTdkNjQzMzRhNTE5Y2ZlN2M1MDcyMDYyMWE0M2ZkZGNmZDp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiIxMTNkMjMyNjhjNGY2OGU3NGZmNWI2Y2UyNzE2N2QxNjI5NTE1Mzg0In0=', '2020-11-05 11:11:48.746429');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `game_data`
+--
+
+CREATE TABLE `game_data` (
+  `id` int NOT NULL,
+  `active` tinyint(1) NOT NULL,
+  `created_at` datetime(6) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `game_matchs`
+--
+
+CREATE TABLE `game_matchs` (
+  `id` int NOT NULL,
+  `active` tinyint(1) NOT NULL,
+  `created_at` datetime(6) NOT NULL,
+  `is_completed` tinyint(1) NOT NULL,
+  `session_id` int NOT NULL,
+  `team_blue_id` int NOT NULL,
+  `team_red_id` int NOT NULL,
+  `user_id` int NOT NULL,
+  `winner_id` int NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `game_players`
+--
+
+CREATE TABLE `game_players` (
+  `id` int NOT NULL,
+  `active` tinyint(1) NOT NULL,
+  `created_at` datetime(6) NOT NULL,
+  `first_name` varchar(45) NOT NULL,
+  `last_name` varchar(150) NOT NULL,
+  `ratings` int NOT NULL,
+  `strength` int NOT NULL,
+  `agility` int NOT NULL,
+  `resistence` int NOT NULL,
+  `foot` varchar(10) NOT NULL,
+  `position` varchar(45) NOT NULL,
+  `team_id` int NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `game_sessions`
+--
+
+CREATE TABLE `game_sessions` (
+  `id` int NOT NULL,
+  `active` tinyint(1) NOT NULL,
+  `created_at` datetime(6) NOT NULL,
+  `token` varchar(45) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `game_teams`
+--
+
+CREATE TABLE `game_teams` (
+  `id` int NOT NULL,
+  `active` tinyint(1) NOT NULL,
+  `created_at` datetime(6) NOT NULL,
+  `name` varchar(150) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `game_usersessionstats`
+--
+
+CREATE TABLE `game_usersessionstats` (
+  `id` int NOT NULL,
+  `active` tinyint(1) NOT NULL,
+  `created_at` datetime(6) NOT NULL,
+  `ranking_position` smallint NOT NULL,
+  `session_id` int NOT NULL,
+  `user_id` int NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Índices para tabelas despejadas
@@ -337,6 +436,50 @@ ALTER TABLE `django_session`
   ADD KEY `django_session_expire_date_a5c62663` (`expire_date`);
 
 --
+-- Índices para tabela `game_data`
+--
+ALTER TABLE `game_data`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Índices para tabela `game_matchs`
+--
+ALTER TABLE `game_matchs`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `game_matchs_session_id_f78b1839_fk_game_sessions_id` (`session_id`),
+  ADD KEY `game_matchs_team_blue_id_7a7b54e0_fk_game_teams_id` (`team_blue_id`),
+  ADD KEY `game_matchs_team_red_id_6b2cc276_fk_game_teams_id` (`team_red_id`),
+  ADD KEY `game_matchs_user_id_32275a1e_fk_auth_user_id` (`user_id`),
+  ADD KEY `game_matchs_winner_id_4f2a4952_fk_game_teams_id` (`winner_id`);
+
+--
+-- Índices para tabela `game_players`
+--
+ALTER TABLE `game_players`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `game_players_team_id_58c4f9cd_fk_game_teams_id` (`team_id`);
+
+--
+-- Índices para tabela `game_sessions`
+--
+ALTER TABLE `game_sessions`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Índices para tabela `game_teams`
+--
+ALTER TABLE `game_teams`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Índices para tabela `game_usersessionstats`
+--
+ALTER TABLE `game_usersessionstats`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `game_usersessionstats_session_id_2cf1b1a2_fk_game_sessions_id` (`session_id`),
+  ADD KEY `game_usersessionstats_user_id_b8576b24_fk_auth_user_id` (`user_id`);
+
+--
 -- AUTO_INCREMENT de tabelas despejadas
 --
 
@@ -356,7 +499,7 @@ ALTER TABLE `auth_group_permissions`
 -- AUTO_INCREMENT de tabela `auth_permission`
 --
 ALTER TABLE `auth_permission`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
 
 --
 -- AUTO_INCREMENT de tabela `auth_user`
@@ -386,13 +529,49 @@ ALTER TABLE `django_admin_log`
 -- AUTO_INCREMENT de tabela `django_content_type`
 --
 ALTER TABLE `django_content_type`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT de tabela `django_migrations`
 --
 ALTER TABLE `django_migrations`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+
+--
+-- AUTO_INCREMENT de tabela `game_data`
+--
+ALTER TABLE `game_data`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `game_matchs`
+--
+ALTER TABLE `game_matchs`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `game_players`
+--
+ALTER TABLE `game_players`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `game_sessions`
+--
+ALTER TABLE `game_sessions`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `game_teams`
+--
+ALTER TABLE `game_teams`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `game_usersessionstats`
+--
+ALTER TABLE `game_usersessionstats`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
 -- Restrições para despejos de tabelas
@@ -431,6 +610,29 @@ ALTER TABLE `auth_user_user_permissions`
 ALTER TABLE `django_admin_log`
   ADD CONSTRAINT `django_admin_log_content_type_id_c4bce8eb_fk_django_co` FOREIGN KEY (`content_type_id`) REFERENCES `django_content_type` (`id`),
   ADD CONSTRAINT `django_admin_log_user_id_c564eba6_fk_auth_user_id` FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`);
+
+--
+-- Limitadores para a tabela `game_matchs`
+--
+ALTER TABLE `game_matchs`
+  ADD CONSTRAINT `game_matchs_session_id_f78b1839_fk_game_sessions_id` FOREIGN KEY (`session_id`) REFERENCES `game_sessions` (`id`),
+  ADD CONSTRAINT `game_matchs_team_blue_id_7a7b54e0_fk_game_teams_id` FOREIGN KEY (`team_blue_id`) REFERENCES `game_teams` (`id`),
+  ADD CONSTRAINT `game_matchs_team_red_id_6b2cc276_fk_game_teams_id` FOREIGN KEY (`team_red_id`) REFERENCES `game_teams` (`id`),
+  ADD CONSTRAINT `game_matchs_user_id_32275a1e_fk_auth_user_id` FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`),
+  ADD CONSTRAINT `game_matchs_winner_id_4f2a4952_fk_game_teams_id` FOREIGN KEY (`winner_id`) REFERENCES `game_teams` (`id`);
+
+--
+-- Limitadores para a tabela `game_players`
+--
+ALTER TABLE `game_players`
+  ADD CONSTRAINT `game_players_team_id_58c4f9cd_fk_game_teams_id` FOREIGN KEY (`team_id`) REFERENCES `game_teams` (`id`);
+
+--
+-- Limitadores para a tabela `game_usersessionstats`
+--
+ALTER TABLE `game_usersessionstats`
+  ADD CONSTRAINT `game_usersessionstats_session_id_2cf1b1a2_fk_game_sessions_id` FOREIGN KEY (`session_id`) REFERENCES `game_sessions` (`id`),
+  ADD CONSTRAINT `game_usersessionstats_user_id_b8576b24_fk_auth_user_id` FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

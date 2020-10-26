@@ -10,6 +10,9 @@ from game.models.general import Base
 class Teams(Base):
     name = models.CharField(max_length=150)
 
+    def __str__(self):
+        return self.name
+
 class Sessions(Base):
     token = models.CharField(max_length=45)
 
@@ -29,6 +32,12 @@ class Matchs(Base):
 
 # Base stats of individual players
 class Players(Base):
+
+    FOOT_SIDE_CHOICES = (
+        (0, 'Left'),
+        (1, 'Right')
+    )
+
     first_name = models.CharField(max_length=45)
     last_name = models.CharField(max_length=150)
     
@@ -37,7 +46,10 @@ class Players(Base):
     agility = models.IntegerField(default=0)# Velocity
     resistence = models.IntegerField(default=0)# Duration in game ?
 
-    foot = models.CharField(max_length=10)# left or right?
+    foot = models.IntegerField(null=False, blank=False, choices=FOOT_SIDE_CHOICES)
     position = models.CharField(max_length=45)
     team = models.ForeignKey("game.teams", related_name="player", on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f'{self.first_name} {self.last_name} - {self.position}'
     
