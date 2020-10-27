@@ -9,6 +9,8 @@ from game.models.general import Base
 # Base stats of teams
 class Teams(Base):
     name = models.CharField(max_length=150)
+    owner = models.ForeignKey(User, verbose_name="Team Owner", on_delete=models.CASCADE)
+    players = models.ManyToManyField("game.Players", verbose_name="Players")
 
     def __str__(self):
         return self.name
@@ -48,8 +50,7 @@ class Players(Base):
 
     foot = models.IntegerField(null=False, blank=False, choices=FOOT_SIDE_CHOICES)
     position = models.CharField(max_length=45)
-    team = models.ForeignKey("game.teams", related_name="player", on_delete=models.CASCADE)
 
     def __str__(self):
-        return f'{self.first_name} {self.last_name} - {self.position}'
+        return f'{self.first_name} {self.last_name} | {self.position}'
     
