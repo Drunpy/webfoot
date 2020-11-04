@@ -3,14 +3,42 @@
 # --------------------------------------
 
 from django.db import models
+from django.db.models import Avg
 from django.contrib.auth.models import User
 from game.models.general import Base
+
 
 # Base stats of teams
 class Teams(Base):
     name = models.CharField(max_length=150)
     owner = models.ForeignKey(User, verbose_name="Team Owner", on_delete=models.CASCADE)
     players = models.ManyToManyField("game.Players", verbose_name="Players")
+
+    class Meta:
+        ordering = ['name']
+
+    def _with_avarages(self):
+        return self.players.all().aggregate(
+            velocity=Avg('agility'),
+            strength=Avg('strength'),
+        )
+
+    @property 
+    def velocity(self):
+        return self._with_avarages().get('velocity')
+    
+    @property
+    def strength(self):
+        return self._with_avarages().get('strength')
+    
+    @property
+    def defense(self):
+        # think
+        pass
+    
+    @property
+    def power(self):
+        return int(self.strength - self.velocity)
 
     def __str__(self):
         return self.name

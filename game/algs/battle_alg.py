@@ -1,5 +1,5 @@
 from typing import NewType
-
+from random import randint
 Team = NewType('Team', int)
 
 class TeamBattle(object):
@@ -8,30 +8,11 @@ class TeamBattle(object):
         print("Team one", team_one)
         print("Team two", team_two)
 
-        team_one_players = team_one.players.all()
-        team_two_players = team_two.players.all()
+        team_one_power = team_one.power + randint(0, 7)
+        team_two_power = team_two.power + randint(0, 7)
 
-        team_one_stats = []
-        for player_to in team_one_players:
-            team_one_stats.append([player_to.strength, player_to.resistence])
-
-        team_two_stats = []
-        for player_tt in team_two_players:
-            team_two_stats.append([player_tt.strength, player_tt.resistence])
-
-        team_one_score = 0
-        team_two_score = 0
-
-        teams_stats = team_one_stats + team_two_stats
-        for index, stat in enumerate(teams_stats):
-            try:
-                if stat[0] < teams_stats[index+1][0]:
-                    team_one_score+=1
-                else:
-                    team_two_score+=1
-            except:
-                pass
-
-        print(f"Stats {team_one_stats} - {team_two_stats}")
-        winner = team_one if team_one_score > team_two_score else team_two
-        return f"Battle {team_one}({team_one_stats}) x {team_two}({team_two_stats}) -> {winner}"
+        print("Power: ", team_one.power, team_two.power)
+        print("Luck Fac: ", team_one_power, team_two_power)
+        winner = team_one if team_one_power > team_two_power else team_two
+        
+        return f"{winner} is the winner of battle between {team_one} and {team_two}"
