@@ -1,6 +1,6 @@
 # Webfoot
 
-Web foot is brownser game heavily inspirated by Brasfoot.
+Web foot is browser game heavily inspirated by Brasfoot.
 
 ## Running
 
